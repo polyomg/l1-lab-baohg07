@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    i{
+        color: red;
+    }
+</style>
+<body>
+<i th:text="${message}"></i>
+<form th:object="${staff}" action="/staff/create/save" method="post" enctype="multipart/form-data">
+    <label>Email</label>
+    <input type="text" th:field="*{id}"/>
+    <i th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></i>
+    <hr>
+
+    <label>Họ Và Tên</label>
+    <input type="text" th:field="*{fullName}"/>
+    <i th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></i>
+    <hr>
+
+    <label>Giới Tính</label>
+    <input type="radio" th:field="*{gender}" value="true"/> Nam
+    <input type="radio" th:field="*{gender}" value="false"/> Nữ
+    <i th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></i>
+    <hr>
+
+    <label>Ngày Sinh</label>
+    <input type="date" th:field="*{birthday}"/>
+    <i th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></i>
+    <hr>
+
+    <label>Hình Ảnh</label>
+    <input type="hidden" th:field="*{photo}"/>
+    <input type="file" name="photo_file"/>
+    <hr>
+
+    <label>Cấp Bậc</label>
+    <select th:field="*{level}">
+        <option value="0">Úy</option>
+        <option value="1">Tá</option>
+        <option value="2">Tướng</option>
+    </select>
+    <hr>
+
+    <label>Salary</label>
+    <input type="number" step="0.01" th:field="*{salary}"/>
+    <i th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></i>
+    <hr>
+
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>
