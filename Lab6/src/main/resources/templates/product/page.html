@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pagination</title>
+    <style>
+        table { width: 100%; border-collapse: collapse }
+        td, th { border: 1px solid #ccc; padding: 6px }
+        a { margin-right: 8px }
+    </style>
+</head>
+<body>
+<h3>PAGINATION</h3>
+<table border="1" style="width:100%">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Date</th>
+    </tr>
+    <th:block th:each="item : ${page.content}">
+        <tr>
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd')}"></td>
+        </tr>
+    </th:block>
+</table>
+
+<div>
+    <a th:href="@{'/product/page'(p=0)}">First</a>
+    <a th:href="@{'/product/page'(p=${page.number > 0 ? page.number - 1 : 0})}">Previous</a>
+    <th:block th:if="${page.totalPages > 1}" th:each="i : ${#numbers.sequence(0, page.totalPages-1)}">
+        <a th:if="${i != page.number}" th:href="@{'/product/page'(p=${i})}" th:text="${i}" style="margin:0 4px"></a>
+        <span th:if="${i == page.number}" th:text="${i}" style="margin:0 4px; font-weight:bold; text-decoration:underline"></span>
+    </th:block>
+    <a th:href="@{'/product/page'(p=${page.number + 1 < page.totalPages ? page.number + 1 : page.totalPages - 1})}">Next</a>
+    <a th:href="@{'/product/page'(p=${page.totalPages - 1})}">Last</a>
+</div>
+
+<ul>
+    <li>Số thứ tự hiện tại: <span th:text="${page.numberOfElements}"></span></li>
+    <li>Trang số: <span th:text="${page.number}"></span></li>
+    <li>Kích thước trang: <span th:text="${page.size}"></span></li>
+    <li>Tổng số thực thể: <span th:text="${page.totalElements}"></span></li>
+    <li>Tổng số trang: <span th:text="${page.totalPages}"></span></li>
+</ul>
+
+</body>
+</html>
+
+
